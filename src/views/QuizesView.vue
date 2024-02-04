@@ -2,7 +2,12 @@
   <div>
     <header>
       <h1>Quizes</h1>
-      <input type="text" placeholder="Search..." />
+      <input
+        type="text"
+        placeholder="Search..."
+        v-model="searchQuiz"
+        @input="searchQuizes"
+      />
     </header>
     <div class="options-container">
       <Card v-for="quiz in quizes" :key="quiz.id" :quiz="quiz" />
@@ -11,12 +16,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import data from "../data/quizes.json";
 import Card from "../components/Card.vue";
 
 const quizes = ref(data);
 console.log(quizes.value);
+
+const searchQuiz = ref(null);
+
+const searchQuizes = computed(() => {
+  if (searchQuiz.value != "") {
+    quizes.value = quizes.value.filter((el) =>
+      el.name.toLowerCase().includes(searchQuiz.value.toLowerCase())
+    );
+  } else {
+    quizes.value = data;
+  }
+});
 </script>
 
 <style scoped>
