@@ -29,7 +29,6 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const quizes = ref(data);
-console.log(quizes.value);
 
 const searchQuiz = ref(null);
 
