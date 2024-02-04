@@ -10,7 +10,12 @@
       />
     </header>
     <div class="options-container">
-      <Card v-for="quiz in quizes" :key="quiz.id" :quiz="quiz" />
+      <Card
+        v-for="quiz in quizes"
+        :key="quiz.id"
+        :quiz="quiz"
+        @click="navigateToQuiz(quiz.id)"
+      />
     </div>
   </div>
 </template>
@@ -19,6 +24,9 @@
 import { computed, ref } from "vue";
 import data from "../data/quizes.json";
 import Card from "../components/Card.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const quizes = ref(data);
 console.log(quizes.value);
@@ -34,6 +42,15 @@ const searchQuizes = computed(() => {
     quizes.value = data;
   }
 });
+
+const navigateToQuiz = (id) => {
+  router.push({
+    name: "QuizView",
+    params: {
+      id: id,
+    },
+  });
+};
 </script>
 
 <style scoped>
